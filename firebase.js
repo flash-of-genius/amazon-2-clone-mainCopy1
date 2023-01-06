@@ -1,13 +1,12 @@
 import firebase from "firebase";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCqw9khUKGUR9XU4cMSeX7_gTZYmVKlmJQ",
-    authDomain: "ultimate-ninja-67.firebaseapp.com",
-    databaseURL: "https://ultimate-ninja-67.firebaseio.com",
-    projectId: "ultimate-ninja-67",
-    storageBucket: "ultimate-ninja-67.appspot.com",
-    messagingSenderId: "246024766381",
-    appId: "1:246024766381:web:50eb134eb0659e461d9724",
+    apiKey: "AIzaSyDV7V9vf4D7RiUuCaruMr8OGRcgCU5Oibk",
+    authDomain: "clone-1c4a0.firebaseapp.com",
+    projectId: "clone-1c4a0",
+    storageBucket: "clone-1c4a0.appspot.com",
+    messagingSenderId: "918879905764",
+    appId: "1:918879905764:web:4f44e699bb0f005160c9f1",
 };
 
 const app = !firebase.apps.length
