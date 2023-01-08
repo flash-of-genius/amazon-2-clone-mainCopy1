@@ -19,9 +19,11 @@ function Product({ id, title, price, description, category, image }) {
             id,
             title,
             price,
+            rating,
             description,
             category,
             image,
+            hasPrime,
         };
         // sending the product via an action to the redux tore(=basket "slice")
         dispatch(addToBasket(product));
