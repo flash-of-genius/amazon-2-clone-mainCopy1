@@ -4,7 +4,7 @@ import { StarIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 import { selectItems, selectTotal } from "./../slices/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct.js";
-import Currency from "react-currency-formatter";
+import CurrencyFormat from "react-currency-format";
 import { useSession } from "next-auth/client";
 
 function Checkout() {
@@ -17,11 +17,10 @@ function Checkout() {
             <main className="lg: flex max-w-screen-2xl mx-auto">
                 {/* left */}
                 <div className="flex-grow m-5 shadow-sm">
-                    <Image
+                    <img
                         src="https://links.papareact.com/ikj"
                         width={1020}
                         height={250}
-                        objectFit="contain"
                     />
 
                     <div className="flex flex-col p-5 space-y-50 bg-white">
@@ -51,11 +50,11 @@ function Checkout() {
                     {items.length > 0 && (
                         <>
                             <h2 className="whitespace-nowrap">
-                                Subtotal ({items.length} items):{" "}
+                                Subtotal ({items.length} items):{"  "}
                                 <span className="font-bold">
-                                    <Currency
-                                        quantity={total}
-                                        currency="Euro"
+                                    <CurrencyFormat
+                                        value={total}
+                                        prefix={"EUR"}
                                     />
                                 </span>
                             </h2>

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/solid";
-import Currency from "react-currency-formatter";
+import CurrencyFormat from "react-currency-format";
 import { useDispatch } from "react-redux";
 import { addToBasket, removeFromBasket } from "../slices/basketSlice";
 function CheckoutProduct({
@@ -36,7 +36,7 @@ function CheckoutProduct({
     };
     return (
         <div className="grid grid-cols-5">
-            <Image src={image} height={200} width={200} objectFit="contain" />
+            <img src={image} height={200} width={200} objectFit="contain" />
 
             {/* Middle */}
             <div classname="col-span-3 mx-5">
@@ -49,7 +49,7 @@ function CheckoutProduct({
                         ))}
                 </div>
                 <p className="text-xs my-2 line-clamp-3">{description}</p>
-                <Currency quantity={price} currency="EUR" />
+                <CurrencyFormat value={price} prefix={"EUR "} />
                 {hasPrime && (
                     <div classname="flex items-center space-x-2">
                         <img

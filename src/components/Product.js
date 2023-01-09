@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/solid";
-import Currency from "react-currency-formatter";
+import CurrencyFormat from "react-currency-format";
 import { useDispatch } from "react-redux";
 import { addToBasket } from "../slices/basketSlice";
 
@@ -33,7 +33,7 @@ function Product({ id, title, price, description, category, image }) {
             <p className="absolute top-2 right-3 text-sm italic text-gray-400">
                 {category}
             </p>
-            <Image src={image} width={200} height={200} objectFit="contain" />
+            <img src={image} width={200} height={200} objectFit="contain" />
             <h4 className="my-3">{title}</h4>
             <div className="flex">
                 {Array(rating)
@@ -44,7 +44,7 @@ function Product({ id, title, price, description, category, image }) {
             </div>
             <p className="text-xs my-2 line-clamp-2">{description}</p>
             <div className="mb-5">
-                <Currency quantity={price} currency="EUR" />
+                <CurrencyFormat value={price} prefix={"EUR "} />
             </div>
             {hasPrime && (
                 <div className="flex items-center space-x-2 -mt-5">
