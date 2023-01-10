@@ -22,6 +22,13 @@ function Checkout() {
             "/api/create-checkout-session",
             { items, email: session.user.email }
         );
+        // After have created a session, redirect the user/customer to stripe checkout
+        const result = await stripe.redirectToCheckout({
+            sessionId: checkoutSession.data.id,
+        });
+        if (result.error) {
+            alert(result.error.message); // @todo: improve that
+        }
     };
     return (
         <div className="bg-gray-100">
