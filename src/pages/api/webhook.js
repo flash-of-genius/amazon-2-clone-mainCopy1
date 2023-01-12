@@ -1,29 +1,18 @@
-import { buffer } from "micro"; // @todo: what's micro ? RTFM!
+import { buffer } from "micro";
 import * as admin from "firebase-admin";
 
-const serviceAccount = require("../../../permissions.json"); // Can't do an import here!
-
-// Merge permissions with environment secret keys
-serviceAccount.client_id = process.env.FIREBASE_ADMIN_CLIENT_ID;
-serviceAccount.private_key_id = process.env.FIREBASE_ADMIN_PRIVATE_KEY_ID;
-serviceAccount.private_key = process.env.FIREBASE_ADMIN_PRIVATE_KEY;
-
+// secure a connection to firebase from the backend.
+const serviceAccount = require("../../../permissions.json"); // can't do an import here !
 const app = !admin.apps.length
-    ? admin.initializeApp({
-          credential: admin.credential.cert(serviceAccount),
-      })
+    ? admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
     : admin.app();
 
-// Etablish connection to Stripe
+// Establish connection to Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_SIGNING_SECRET; // WHERE IS THIS?
+
 const fulfillOrder = async (session) => {
-    console.log("Fulfilling order", session);
-
-    const images = JSON.parse(session.metadata.images).map((image) =>
-        JSON.stringify(image)
-    );
-
+    console.log("Fullfilling order", session);
     return app
         .firestore()
         .collection("AMAZON_users")
@@ -41,7 +30,7 @@ const fulfillOrder = async (session) => {
                 `SUCCESS: Order ${session.id} had been added to the DB`
             );
         })
-        .catch((err) => console.log("Erreur a l'insertion !", err.message));
+        .catch((err) => console.log("Erreur a l insertion!", err.message));
 };
 
 export default async (req, res) => {
@@ -51,9 +40,7 @@ export default async (req, res) => {
         const sig = req.headers["stripe-signature"];
 
         let event;
-        // Verify that the EVENT posted came from stripe :
-        // https://stripe.com/docs/connect/webhooks
-
+        // Verify that the Event posted came from stripe
         try {
             event = stripe.webhooks.constructEvent(
                 payload,
@@ -68,12 +55,11 @@ export default async (req, res) => {
         // Handle the checkout.session.completed event
         if (event.type === "checkout.session.completed") {
             const session = event.data.object;
-
-            // Fulfill the order...
+            // Fulfill the order ...
             return fulfillOrder(session)
                 .then(() => res.status(200))
                 .catch((err) =>
-                    res.status(400).send(`Webhook Error: ${err.message}`)
+                    res.status(400).send(`Webhook Error:${err.message}`)
                 );
         }
     }
